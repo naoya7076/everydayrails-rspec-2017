@@ -38,4 +38,12 @@ RSpec.describe Project, type: :model do
     )
     expect(other_project).to be_valid
   end
+
+  # 名前がない場合はプロジェクトの作成に失敗すること
+  it "is invalid without a project name" do
+    invalid_project = @user.projects.create(
+      name: nil
+    )
+    expect(invalid_project.errors[:name]).to include("can't be blank") 
+  end
 end
