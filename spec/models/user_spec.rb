@@ -6,6 +6,12 @@ RSpec.describe User, type: :model do
     it "has a valid factory" do
       expect(FactoryBot.build(:user)).to be_valid 
     end
+
+    # たくさんのプロジェクトが付随していること
+    it "can have many projects" do
+      user = FactoryBot.create(:user, :with_projects)
+      expect(user.projects.length).to eq 5
+    end
   end
   
   it "is valid with a first name, last name and email, and password" do
