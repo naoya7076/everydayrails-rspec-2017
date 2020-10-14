@@ -7,18 +7,13 @@ class Note < ApplicationRecord
   validates :message, presence: true
 
   scope :search, ->(term) {
-    where("LOWER(message) LIKE ?", "%#{term.downcase}%")
+    where('LOWER(message) LIKE ?', '%#{term.downcase}%')
   }
 
   has_attached_file :attachment
 
   validates_attachment :attachment,
     content_type: {
-      content_type: [
-        "image/jpeg",
-        "image/gif",
-        "image/png",
-        "application/pdf",
-      ],
+      content_type: %w(image/jpeg image/gif image/png application/pdf),
     }
 end
