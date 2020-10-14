@@ -27,3 +27,6 @@
 
 .ruby-version
 .solargraph.yml
+
+# Rubymine files
+/.idea

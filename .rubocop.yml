@@ -1,0 +1,16 @@
+# target_version:
+#   rubocop v0.93.1
+
+require:
+  - rubocop-rspec
+# 自動生成されるものはチェック対象から除外する
+AllCops:
+  Exclude:
+    - "vendor/**/*" # rubocop config/default.yml
+    - "db/schema.rb"
+  DisplayCopNames: true
+
+##################### Style ##################################
+# 日本語のコメントを許可する
+Style/AsciiComments:
+  Enabled: false
