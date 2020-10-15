@@ -66,18 +66,34 @@ RSpec.describe ProjectsController, type: :controller do
   end
 
   describe "#create" do
+    # 認可済みのユーザーとして
     context "as an authenticated user" do
       before do
         @user = FactoryBot.create(:user)
       end
 
-      # プロジェクトを追加できること
-      it "adds a project" do
-        project_params = FactoryBot.attributes_for(:project)
-        sign_in @user
-        expect {
-          post :create, params: {project: project_params}
-        }.to change(@user.projects, :count).by(1)
+      # 有効な属性値の場合
+      context "with valid attributes" do
+        # プロジェクトを追加できること
+        it "adds a project" do
+          project_params = FactoryBot.attributes_for(:project)
+          sign_in @user
+          expect {
+            post :create, params: {project: project_params}
+          }.to change(@user.projects, :count).by(1)
+        end
+      end
+
+      # 無効な属性値の場合
+      context "with invalid attributes" do
+        # プロジェクトを追加できないこと
+        it "does not add a project" do
+          project_params = FactoryBot.attributes_for(:project, :invalid)
+          sign_in @user
+          expect {
+            post :create, params: {project: project_params}
+          }.to_not change(@user.projects, :count)
+        end
       end
     end
 
@@ -198,7 +214,7 @@ RSpec.describe ProjectsController, type: :controller do
       end
 
       # ダッシュボードにリダイレクトすること
-      it ":redirects to the dashboard" do
+      it "redirects to the dashboard" do
         sign_in @user
         delete :destroy, params: {id: @project.id }
         expect(response).to redirect_to root_path
@@ -215,6 +231,19 @@ RSpec.describe ProjectsController, type: :controller do
       it "returns a 302 response" do
         delete :destroy, params: {id: @project.id}
         expect(response).to have_http_status "302"
+      end
+
+      # サインイン画面にリダイレクトすること
+      it "redirects to the sign-in page" do
+        delete :destroy, params: {id: @project.id}
+        expect(response).to redirect_to "/users/sign_in"
+      end
+
+      # プロジェクトを削除できないこと
+      it "does not delete the project" do
+        expect {
+          delete :destroy, params: {id: @project.id}
+        }.to_not change(Project, :count)
       end
     end
   end
