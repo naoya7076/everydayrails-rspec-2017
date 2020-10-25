@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature "Projects", type: :feature do
   # ユーザーが新しいプロジェクトを作成する
   scenario "user creates a new project" do
-    user = FacroryBot.create(:user)
+    user = FactoryBot.create(:user)
 
     visit root_path
     click_link "Sign in"
