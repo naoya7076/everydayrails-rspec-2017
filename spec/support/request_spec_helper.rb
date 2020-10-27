@@ -1,5 +1,5 @@
-module RequestSpecHepler
-  include Warden::Test::Heplers
+module RequestSpecHelper
+  include Warden::Test::Helpers
 
   def self.included(base)
     base.before(:each) { Warden.test_mode! }
