@@ -16,7 +16,7 @@ RSpec.feature "Tasks", type: :feature do
     complate_task "Finish RSpec tutorial"
     expect_complate_task "Finish RSpec tutorial"
 
-    undo_complate_taskb "Finish RSpec tutorial"
+    undo_complate_task "Finish RSpec tutorial"
     expect_incomplete_task "Finish RSpec tutorial"
   end
 
@@ -35,7 +35,7 @@ RSpec.feature "Tasks", type: :feature do
 
   def expect_complate_task(name)
     aggregate_failures do
-      expect(page).to have_css "label.complated", text: name
+      expect(page).to have_css "label.completed", text: name
       expect(task.reload).to be_completed 
     end
   end
