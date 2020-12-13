@@ -27,3 +27,5 @@
 /spec/test_uploads
 
 .ruby-version
+
+/vendor
