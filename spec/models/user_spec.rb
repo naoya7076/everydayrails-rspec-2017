@@ -34,7 +34,7 @@ RSpec.describe User, type: :model do
 
   it "performs geocoding", vcr: true do
     user = FactoryBot.create(:user, last_sign_in_ip: "161.185.207.20")
-    expect {
+   expect {
       user.geocode
     }.to change(user, :location).
       from(nil).

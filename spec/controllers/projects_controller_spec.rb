@@ -234,6 +234,22 @@ RSpec.describe ProjectsController, type: :controller do
             with(completed: true).
             and_return(false)
         end
+
+        it "redirects to the project page" do
+          patch :complete, params: { id: project.id }
+          expect(response).to redirect_to project_path(project)
+        end
+
+        it "sets the flash" do
+          patch :complete, params: { id: project.id }
+          expect(flash[:alert]).to eq "Unable to complete project."
+        end
+
+        it "doesn't mark the project as completed" do
+          expect {
+            patch :complete, params: { id: project.id }
+          }.to_not change(project, :completed)
+        end
       end
     end
   end
