@@ -219,4 +219,22 @@ RSpec.describe ProjectsController, type: :controller do
       end
     end
   end
+
+  describe "#complete" do
+    context "as an authenticated user" do
+      let!(:project) { FactoryBot.create(:project, completed: nil) }
+      before do
+        sign_in project.owner
+      end
+
+      describe "an unsuccessful completion" do
+        before do
+          allow_any_instance_of(Project).
+            to receive(:update_attributes).
+            with(completed: true).
+            and_return(false)
+        end
+      end
+    end
+  end
 end
